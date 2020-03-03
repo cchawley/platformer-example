@@ -46,7 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AxisList.cs" />
+    <Compile Include="BoundingRectangle.cs" />
+    <Compile Include="IBoundable.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="Tilemap.cs" />
+    <Compile Include="TileMapLayer.cs" />
+    <Compile Include="TilemapReader.cs" />
     <Compile Include="Tileset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TilesetReader.cs" />

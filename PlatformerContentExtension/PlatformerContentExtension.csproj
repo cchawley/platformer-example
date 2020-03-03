@@ -42,6 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TileContent.cs" />
+    <Compile Include="TilemapContent.cs" />
+    <Compile Include="TilemapImporter.cs" />
+    <Compile Include="TilemapLayerContent.cs" />
+    <Compile Include="TilemapProcessor.cs" />
+    <Compile Include="TilemapWriter.cs" />
     <Compile Include="TilesetWriter.cs" />
     <Compile Include="TilesetContent.cs" />
     <Compile Include="TilesetImporter.cs" />

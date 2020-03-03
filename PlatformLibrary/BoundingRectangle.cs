@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace PlatformerExample
+namespace PlatformLibrary
 {
-    public struct BoundingRectangle
+    public struct BoundingRectangle : IBoundable
     {
         /// <summary>
         /// The x coordinate of the upper-left corner of the rectangle
@@ -28,6 +28,11 @@ namespace PlatformerExample
         /// The height of the rectangle
         /// </summary>
         public float Height;
+
+        /// <summary>
+        /// Gets this bounding rectangle
+        /// </summary>
+        public BoundingRectangle Bounds => this;
 
         /// <summary>
         /// Constructs a new bounding rectangle.  This class is similar to a rectangle,

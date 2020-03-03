@@ -27,6 +27,11 @@
 /processorParam:TextureFormat=Color
 /build:backgrounds.png
 
+#begin level1.tmx
+/importer:TilemapImporter
+/processor:
+/build:level1.tmx
+
 #begin pixel.png
 /importer:TextureImporter
 /processor:TextureProcessor

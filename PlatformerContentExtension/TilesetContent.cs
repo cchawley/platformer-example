@@ -35,13 +35,5 @@ namespace PlatformerContentExtension
         public TextureContent Texture { get; set; }
 
         public TileContent[] Tiles;
-
-        /// <summary>
-        /// Builds the tiles for this tileset
-        /// </summary>
-        public void BuildTiles() 
-        {
-            
-        }
     }
 }

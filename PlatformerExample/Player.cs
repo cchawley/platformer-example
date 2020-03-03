@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using PlatformLibrary;
 
 namespace PlatformerExample
 {
@@ -196,7 +197,7 @@ namespace PlatformerExample
             if (verticalState != VerticalMovementState.Jumping)
             {
                 verticalState = VerticalMovementState.Falling;
-                foreach (Platform platform in platforms)
+                foreach (IBoundable platform in platforms)
                 {
                     if (Bounds.CollidesWith(platform.Bounds))
                     {

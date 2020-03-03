@@ -17,6 +17,7 @@ namespace PlatformerExample
         SpriteBatch spriteBatch;
         SpriteSheet sheet;
         Tileset tileset;
+        Tilemap tilemap;
         Player player;
         List<Platform> platforms;
         AxisList world;
@@ -60,8 +61,11 @@ namespace PlatformerExample
             // Create the player with the corresponding frames from the spritesheet
             var playerFrames = from index in Enumerable.Range(19, 30) select sheet[index];
             player = new Player(playerFrames);
-            
-            // Create the platforms
+
+            // Load the level
+            tilemap = Content.Load<Tilemap>("level1");
+
+
             platforms.Add(new Platform(new BoundingRectangle(80, 300, 105, 21), sheet[1]));
             platforms.Add(new Platform(new BoundingRectangle(280, 400, 84, 21), sheet[2]));
             platforms.Add(new Platform(new BoundingRectangle(160, 200, 42, 21), sheet[3]));
@@ -118,6 +122,9 @@ namespace PlatformerExample
             var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null,null, t);
 
+            // Draw the tilemap 
+            tilemap.Draw(spriteBatch);
+
             // Draw the platforms 
             var platformQuery = world.QueryRange(player.Position.X - 221, player.Position.X + 400);
             foreach(Platform platform in platformQuery)
@@ -125,7 +132,7 @@ namespace PlatformerExample
                 platform.Draw(spriteBatch);
             }
             Debug.WriteLine($"{platformQuery.Count()} Platforms rendered");
-
+            
             // Draw the player
             player.Draw(spriteBatch);
             

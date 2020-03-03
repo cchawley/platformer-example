@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlatformLibrary;
 
 namespace PlatformerExample
 {
@@ -56,7 +57,7 @@ namespace PlatformerExample
 #endif
             for (int i = 0; i < tileCount; i++)
             {
-                sprite.Draw(spriteBatch, new Vector2(bounds.X + i * sprite.Width, bounds.Y), Color.White);
+                sprite.Draw(spriteBatch, new Vector2(bounds.X + i * sprite.Width, bounds.Y), Color.Purple);
             }
 
         }

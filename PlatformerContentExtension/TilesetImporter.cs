@@ -46,6 +46,9 @@ namespace PlatformerContentExtension
             var imageFilename = images[0].Attributes["source"].Value;
             var imageColorKey = images[0].Attributes["trans"].Value;
 
+            // TODO: Import any custom tile properties
+            
+            // Create and return the TileContent
             return new TilesetContent()
             {
                 Name = name,
@@ -57,7 +60,7 @@ namespace PlatformerContentExtension
                 Columns = columns,
                 ImageFilename = imageFilename,
                 ImageColorKey = imageColorKey
-            }; ;
+            };
         }
 
     }

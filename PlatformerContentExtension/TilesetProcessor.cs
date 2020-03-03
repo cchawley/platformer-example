@@ -28,7 +28,16 @@ namespace PlatformerContentExtension
             // Then we can load that file through the content pipeline and embed it into the TilesetContent
             ExternalReference<TextureContent> externalRef = new ExternalReference<TextureContent>(input.ImageFilename);
             OpaqueDataDictionary options = new OpaqueDataDictionary();
-            if (input.ImageColorKey != null) options.Add("ColorKeyColor", input.ImageColorKey);
+            if (input.ImageColorKey != null)
+            {
+                // The color key from the TSX file is in hexidecimal string format,
+                // We need to convert it into an XNA Color
+                int rgb = int.Parse(input.ImageColorKey, System.Globalization.NumberStyles.HexNumber);
+                int r = (rgb & 0xff0000) >> 16;
+                int g = (rgb & 0xff00) >> 8;
+                int b = (rgb & 0xff);
+                options.Add("ColorKeyColor", new Color(r, g, b));
+            }
             input.Texture = context.BuildAndLoadAsset<TextureContent, TextureContent>(externalRef, "TextureProcessor", options, "TextureImporter");
 
             // Create the Tiles array
