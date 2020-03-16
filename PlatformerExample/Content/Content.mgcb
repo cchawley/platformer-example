@@ -29,7 +29,7 @@
 
 #begin level1.tmx
 /importer:TilemapImporter
-/processor:
+/processor:TilemapProcessor
 /build:level1.tmx
 
 #begin pixel.png

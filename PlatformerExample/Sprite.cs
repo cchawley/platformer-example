@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlatformLibrary;
 
 namespace PlatformerExample
 {
@@ -9,7 +10,7 @@ namespace PlatformerExample
     public struct Sprite
     {
         // The sprite's source rectangle
-        private Rectangle source;
+        private BoundingRectangle source;
 
         // The sprite's texture
         private Texture2D texture;
@@ -17,12 +18,12 @@ namespace PlatformerExample
         /// <summary>
         /// Gets the sprite's width
         /// </summary>
-        public int Width => source.Width;
+        public int Width => (int)source.Width;
 
         /// <summary>
         /// Gets teh sprite's height
         /// </summary>
-        public int Height => source.Height;
+        public int Height => (int)source.Height;
 
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace PlatformerExample
         /// </summary>
         /// <param name="source"></param>
         /// <param name="texture"></param>
-        public Sprite(Rectangle source, Texture2D texture)
+        public Sprite(BoundingRectangle source, Texture2D texture)
         {
             this.texture = texture;
             this.source = source;
@@ -48,7 +49,7 @@ namespace PlatformerExample
         /// <param name="origin">A vector2 to the origin</param>
         /// <param name="effects">The SpriteEffects</param>
         /// <param name="layerDepth">The sorting layer of the sprite</param>
-        public void Draw(SpriteBatch spriteBatch, Rectangle destinationRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
+        public void Draw(SpriteBatch spriteBatch, BoundingRectangle destinationRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
         {
             spriteBatch.Draw(texture, destinationRectangle, source, color, rotation, origin, effects, layerDepth);
         }
@@ -61,7 +62,7 @@ namespace PlatformerExample
         /// <param name="spriteBatch">The SpriteBatch</param>
         /// <param name="destinationRectangle">The rectangle to draw the sprite into</param>
         /// <param name="color">The color</param>
-        public void Draw(SpriteBatch spriteBatch, Rectangle destinationRectangle, Color color)
+        public void Draw(SpriteBatch spriteBatch, BoundingRectangle destinationRectangle, Color color)
         {
             spriteBatch.Draw(texture, destinationRectangle, source, color);
         }

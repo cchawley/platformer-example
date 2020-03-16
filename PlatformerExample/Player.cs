@@ -41,7 +41,9 @@ namespace PlatformerExample
     public class Player
     {
         // The speed of the walking animation
-        const int FRAME_RATE = 300;
+        const int FRAME_RATE = 500;
+
+        public int gameState = 0;  // 0 for normal, 1 for winning, and 2 for dying
 
         // The duration of a player's jump, in milliseconds
         const int JUMP_TIME = 500;
@@ -74,14 +76,16 @@ namespace PlatformerExample
         Color color = Color.White;
 
         // The origin of the sprite (centered on its feet)
-        Vector2 origin = new Vector2(10, 21);
+        Vector2 origin = new Vector2(10, 20);
+
+        Vector2 BoxCalc = new Vector2(9, 22);
 
         /// <summary>
         /// Gets and sets the position of the player on-screen
         /// </summary>
-        public Vector2 Position = new Vector2(200, 200);
+        public Vector2 Position = new Vector2(1500, 950);
 
-        public BoundingRectangle Bounds => new BoundingRectangle(Position - 1.8f * origin, 38, 41);
+        public BoundingRectangle Bounds => new BoundingRectangle(Position - 1.8f * BoxCalc, 35, 41);
 
         /// <summary>
         /// Constructs a new player
@@ -90,7 +94,7 @@ namespace PlatformerExample
         public Player(IEnumerable<Sprite> frames)
         {
             this.frames = frames.ToArray();
-            animationState = PlayerAnimState.WalkingLeft;
+            animationState = PlayerAnimState.Idle;
         }
 
         /// <summary>

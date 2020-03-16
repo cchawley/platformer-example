@@ -13,13 +13,13 @@ namespace PlatformerExample
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
         SpriteSheet sheet;
         Tileset tileset;
         Tilemap tilemap;
         Player player;
         List<Platform> platforms;
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
         AxisList world;
 
         public Game1()
@@ -68,7 +68,7 @@ namespace PlatformerExample
 
             platforms.Add(new Platform(new BoundingRectangle(80, 300, 105, 21), sheet[1]));
             platforms.Add(new Platform(new BoundingRectangle(280, 400, 84, 21), sheet[2]));
-            platforms.Add(new Platform(new BoundingRectangle(160, 200, 42, 21), sheet[3]));
+            platforms.Add(new Platform(new BoundingRectangle(160, 250, 42, 21), sheet[3]));
 
             // Add the platforms to the axis list
             world = new AxisList();
