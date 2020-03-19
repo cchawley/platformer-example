@@ -82,6 +82,44 @@ namespace PlatformerContentExtension
                 });
             }
 
+            //used to get nodes of objects
+            XmlNodeList objectGroups = map.SelectNodes("//objectgroup");
+            foreach (XmlNode objectGroup in objectGroups)
+            {
+                //get the id and name of the objectgroup
+                var id = uint.Parse(objectGroup.Attributes["id"].Value);
+                var name = objectGroup.Attributes["name"].Value;
+
+                //Create new TilemapObjectGroupContent object
+                TileMapObjects objectGroupContent = new TileMapObjects();
+                objectGroupContent.Id = id;
+                objectGroupContent.Name = name;
+
+                //Get all of the object children of the objectgroup
+                XmlNodeList groupObjects = objectGroup.ChildNodes;
+                foreach (XmlNode groupObject in groupObjects)
+                {
+                    //Bring in all of the info for the object
+                    var sheetIndex = int.Parse(groupObject.Attributes["gid"].Value);
+                    var x = uint.Parse(groupObject.Attributes["x"].Value);
+                    var y = uint.Parse(groupObject.Attributes["y"].Value);
+                    var width = uint.Parse(groupObject.Attributes["width"].Value);
+                    var height = uint.Parse(groupObject.Attributes["height"].Value);
+
+                    //Add the object to its objectgroup
+                    objectGroupContent.Objects.Add(new ObjectGroup()
+                    {
+                        SheetIndex = sheetIndex,
+                        X = x,
+                        Y = y,
+                        Width = width,
+                        Height = height
+                    });
+                }
+                //Add the objectgroup to the TileMapContent
+                output.AllObjects.Add(objectGroupContent);
+            }
+
             return output;
         }
     }

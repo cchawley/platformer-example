@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileContent.cs" />
     <Compile Include="TilemapContent.cs" />
     <Compile Include="TilemapImporter.cs" />
     <Compile Include="TilemapLayerContent.cs" />
+    <Compile Include="TileMapObjects.cs" />
     <Compile Include="TilemapProcessor.cs" />
     <Compile Include="TilemapWriter.cs" />
     <Compile Include="TilesetWriter.cs" />

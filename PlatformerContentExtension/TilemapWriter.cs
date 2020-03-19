@@ -59,6 +59,22 @@ namespace PlatformerContentExtension
                 output.Write(tileset.FirstGID);
                 output.WriteExternalReference(tileset.Reference);
             }
+
+            //Used to write out information regarding the objects
+            output.Write(value.AllObjects.Count);
+            foreach (var group in value.AllObjects)
+            {             
+                output.Write(group.Name);
+                output.Write(group.Objects.Count);
+                foreach (var Object in group.Objects)
+                {                 
+                    output.Write(Object.SheetIndex);
+                    output.Write(Object.X);
+                    output.Write(Object.Y);
+                    output.Write(Object.Width);
+                    output.Write(Object.Height);
+                }
+            }
         }
 
         /// <summary>

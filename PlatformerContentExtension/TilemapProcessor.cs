@@ -33,7 +33,16 @@ namespace PlatformerContentExtension
                 tileset.Reference = context.BuildAsset<TilesetContent, TilesetContent>(externalRef, "TilesetProcessor");
             }
 
-            foreach(TilemapLayerContent layer in input.Layers)
+            //correction for orgin position
+            foreach (TileMapObjects objectGroup in input.AllObjects)
+            {
+                foreach (ObjectGroup groupObject in objectGroup.Objects)
+                {
+                    groupObject.Y -= input.TileHeight;
+                }
+            }
+
+            foreach (TilemapLayerContent layer in input.Layers)
             {
                 List<uint> dataIds = new List<uint>();
                 foreach (var id in layer.DataString.Split(',')) 

@@ -14,7 +14,7 @@ namespace PlatformerExample
     /// <summary>
     /// An enumeration of possible player animation states
     /// </summary>
-    enum PlayerAnimState
+    enum PlayerState
     {
         Idle,
         JumpingLeft,
@@ -55,7 +55,7 @@ namespace PlatformerExample
         int currentFrame = 0;
 
         // The player's animation state
-        PlayerAnimState animationState = PlayerAnimState.Idle;
+        PlayerState animationState = PlayerState.Idle;
 
         // The player's speed
         int speed = 3;
@@ -80,6 +80,8 @@ namespace PlatformerExample
 
         Vector2 BoxCalc = new Vector2(9, 22);
 
+        public int playerBounce;
+
         /// <summary>
         /// Gets and sets the position of the player on-screen
         /// </summary>
@@ -94,7 +96,7 @@ namespace PlatformerExample
         public Player(IEnumerable<Sprite> frames)
         {
             this.frames = frames.ToArray();
-            animationState = PlayerAnimState.Idle;
+            animationState = PlayerState.Idle;
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace PlatformerExample
             switch(verticalState)
             {
                 case VerticalMovementState.OnGround:
-                    if(keyboard.IsKeyDown(Keys.Space))
+                    if (keyboard.IsKeyDown(Keys.Space))
                     {
                         verticalState = VerticalMovementState.Jumping;
                         jumpTimer = new TimeSpan(0);
@@ -120,57 +122,97 @@ namespace PlatformerExample
                     // Simple jumping with platformer physics
                     Position.Y -= (250 / (float)jumpTimer.TotalMilliseconds);
                     if (jumpTimer.TotalMilliseconds >= JUMP_TIME) verticalState = VerticalMovementState.Falling;
+                    if (playerBounce == 1)
+                    {
+                        jumpTimer = new TimeSpan(0);
+                        Position.Y -= (250 / (float)jumpTimer.TotalMilliseconds);
+                        playerBounce = 0;
+                    }
+                    if (Position.X - 16 < 0)
+                    {
+                        Position.X = 16;
+                    }
+                    if (Position.X + 20 > 1600)
+                    {
+                        Position.X = 1580;
+                    }
                     break;
                 case VerticalMovementState.Falling:
                     Position.Y += speed;
                     // TODO: This needs to be replaced with collision logic
-                    if (Position.Y > 500)
+                    if (Position.Y > 1000)
                     {
-                        Position.Y = 500;
+                        Position.Y = 1000;
+                    }
+                    if (Position.X - 16 < 0)
+                    {
+                        Position.X = 16;
+                    }
+                    if (Position.X + 20 > 1600)
+                    {
+                        Position.X = 1580;
                     }
                     break;
             }
-            
+
 
             // Horizontal movement
             if (keyboard.IsKeyDown(Keys.Left))
             {
-                if (verticalState == VerticalMovementState.Jumping || verticalState == VerticalMovementState.Falling) 
-                    animationState = PlayerAnimState.JumpingLeft;
-                else animationState = PlayerAnimState.WalkingLeft;
+                if (verticalState == VerticalMovementState.Jumping || verticalState == VerticalMovementState.Falling)
+                    animationState = PlayerState.JumpingLeft;
+                else animationState = PlayerState.WalkingLeft;
                 Position.X -= speed;
+                if (Position.X - 16 < 0)
+                {
+                    Position.X = 16;
+                }
             }
-            else if(keyboard.IsKeyDown(Keys.Right))
+            else if (keyboard.IsKeyDown(Keys.Right))
             {
                 if (verticalState == VerticalMovementState.Jumping || verticalState == VerticalMovementState.Falling)
-                    animationState = PlayerAnimState.JumpingRight;
-                else animationState = PlayerAnimState.WalkingRight;
+                    animationState = PlayerState.JumpingRight;
+                else animationState = PlayerState.WalkingRight;
                 Position.X += speed;
+                if (Position.X - 16 < 0)
+                {
+                    Position.X = 16;
+                }
+                if (Position.X + 20 > 1600)
+                {
+                    Position.X = 1580;
+                }
             }
             else
             {
-                animationState = PlayerAnimState.Idle;
+                animationState = PlayerState.Idle;
+            }
+        
+            if (Position.X >= 1556 && Position.Y <= 349) //if player gets to the end of the level, they win!
+            {
+                gameState = 1;
+                speed = 0;
             }
 
             // Apply animations
             switch(animationState)
             {
-                case PlayerAnimState.Idle:
+                case PlayerState.Idle:
                     currentFrame = 0;
                     animationTimer = new TimeSpan(0);
                     break;
 
-                case PlayerAnimState.JumpingLeft:
+                case PlayerState.JumpingLeft:
                     spriteEffects = SpriteEffects.FlipHorizontally;
                     currentFrame = 7;
                     break;
 
-                case PlayerAnimState.JumpingRight:
+                case PlayerState.JumpingRight:
                      spriteEffects = SpriteEffects.None;
                     currentFrame = 7;
                     break;
 
-                case PlayerAnimState.WalkingLeft:
+                case PlayerState.WalkingLeft:
                     animationTimer += gameTime.ElapsedGameTime;
                     spriteEffects = SpriteEffects.FlipHorizontally;
                     // Walking frames are 9 & 10
@@ -181,7 +223,7 @@ namespace PlatformerExample
                     currentFrame = (int)Math.Floor(animationTimer.TotalMilliseconds / FRAME_RATE) + 9;
                     break;
 
-                case PlayerAnimState.WalkingRight:
+                case PlayerState.WalkingRight:
                     animationTimer += gameTime.ElapsedGameTime;
                     spriteEffects = SpriteEffects.None;
                     // Walking frames are 9 & 10

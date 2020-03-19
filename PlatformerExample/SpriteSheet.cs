@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PlatformLibrary;
 
 namespace PlatformerExample
 {
@@ -37,7 +38,7 @@ namespace PlatformerExample
             {
                 for (int x = 0; x < columns; x++)
                 {
-                    sprites[y * columns + x] = new Sprite(new Rectangle(
+                    sprites[y * columns + x] = new Sprite(new BoundingRectangle(
                         x * (width + gutter) + offset,
                         y * (height + gutter) + offset,
                         width,
