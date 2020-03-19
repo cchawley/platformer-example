@@ -82,6 +82,8 @@ namespace PlatformerExample
 
         public int playerBounce;
 
+        public Vector2 StartingPosition;
+
         /// <summary>
         /// Gets and sets the position of the player on-screen
         /// </summary>
@@ -93,10 +95,13 @@ namespace PlatformerExample
         /// Constructs a new player
         /// </summary>
         /// <param name="frames">The sprite frames associated with the player</param>
-        public Player(IEnumerable<Sprite> frames)
+        public Player(IEnumerable<Sprite> frames, uint x, uint y)
         {
             this.frames = frames.ToArray();
             animationState = PlayerState.Idle;
+            Position.X = x + 10;
+            Position.Y = y + 21;
+            StartingPosition = Position;
         }
 
         /// <summary>
@@ -188,12 +193,13 @@ namespace PlatformerExample
                 animationState = PlayerState.Idle;
             }
         
+            /*
             if (Position.X >= 1556 && Position.Y <= 349) //if player gets to the end of the level, they win!
             {
                 gameState = 1;
                 speed = 0;
             }
-
+            */
             // Apply animations
             switch(animationState)
             {

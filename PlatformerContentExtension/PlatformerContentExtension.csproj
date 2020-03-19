@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileContent.cs" />
+    <Compile Include="Properties\TileContent.cs" />
     <Compile Include="TilemapContent.cs" />
     <Compile Include="TilemapImporter.cs" />
     <Compile Include="TilemapLayerContent.cs" />

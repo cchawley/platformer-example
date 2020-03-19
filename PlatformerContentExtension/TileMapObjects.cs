@@ -19,7 +19,7 @@ namespace PlatformerContentExtension
         public uint Height { get; set; }
     }
 
-    class TileMapObjects
+    public class TileMapObjects
     {
         public uint Id { get; set; }
 

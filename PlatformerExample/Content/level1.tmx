@@ -60,8 +60,8 @@
   <object id="294" gid="3" x="882.524" y="210.512" width="21" height="21"/>
  </objectgroup>
  <objectgroup id="2" name="PlayerSpawn">
-  <object id="30" name="End" gid="168" x="20.5659" y="62.5734" width="21" height="21"/>
-  <object id="31" name="Start" gid="20" x="900.864" y="1026.01" width="21" height="21"/>
+  <object id="30" gid="168" x="20.5659" y="62.5734" width="21" height="21"/>
+  <object id="31" gid="20" x="900.864" y="1026.01" width="21" height="21"/>
   <object id="32" gid="2" x="798.163" y="986.886" width="21" height="21"/>
   <object id="33" gid="2" x="818.947" y="986.886" width="21" height="21"/>
   <object id="34" gid="2" x="839.732" y="986.886" width="21" height="21"/>
