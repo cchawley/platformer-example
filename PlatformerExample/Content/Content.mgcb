@@ -27,10 +27,27 @@
 /processorParam:TextureFormat=Color
 /build:backgrounds.png
 
-#begin level1.tmx
+#begin BetterSet2.tsx
+/importer:TilesetImporter
+/processor:TilesetProcessor
+/build:BetterSet2.tsx
+
+#begin E:/game pics/spritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:E:/game pics/spritesheet.png;spritesheet.png
+
+#begin level3.tmx
 /importer:TilemapImporter
 /processor:TilemapProcessor
-/build:level1.tmx
+/build:level3.tmx
 
 #begin pixel.png
 /importer:TextureImporter
@@ -47,7 +64,7 @@
 #begin spritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
-/processorParam:ColorKeyColor=94,129,162,255
+/processorParam:ColorKeyColor=255,0,255,255
 /processorParam:ColorKeyEnabled=True
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
@@ -55,9 +72,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:spritesheet.png
-
-#begin tiledspritesheet.tsx
-/importer:TilesetImporter
-/processor:TilesetProcessor
-/build:tiledspritesheet.tsx
 
