@@ -61,8 +61,29 @@ namespace PlatformLibrary
                 }
             }
 
+            // Read the ObjectGroup data
+            var objectGroups = new List<ObjectGroup>();
+            var objectGroupsCount = input.ReadUInt32();
+            for (var i = 0; i < objectGroupsCount; i++)
+            {
+                var name = input.ReadString();
+                var groupObjects = new List<GroupObject>();
+                var groupObjectsCount = input.ReadUInt32();
+                for (var j = 0; j < groupObjectsCount; j++)
+                {
+                    var width = input.ReadUInt32();
+                    var height = input.ReadUInt32();
+                    var x = input.ReadUInt32();
+                    var y = input.ReadUInt32();                  
+                    var sheetIndex = input.ReadInt32();
+
+                    groupObjects.Add(new GroupObject(sheetIndex, x, y, width, height));
+                }
+                objectGroups.Add(new ObjectGroup(name, groupObjects.ToArray()));
+            }
+
             // Construct and return the tilemap
-            return new Tilemap(mapWidth, mapHeight, tileWidth, tileHeight, layers, tiles.ToArray());
+            return new Tilemap(mapWidth, mapHeight, tileWidth, tileHeight, layers, tiles.ToArray(), objectGroups.ToArray());
         }
     }
 }

@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="AxisList.cs" />
     <Compile Include="BoundingRectangle.cs" />
+    <Compile Include="GroupObject.cs" />
     <Compile Include="IBoundable.cs" />
+    <Compile Include="ObjectGroup.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Tilemap.cs" />
     <Compile Include="TileMapLayer.cs" />

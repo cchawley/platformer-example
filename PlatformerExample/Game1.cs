@@ -38,7 +38,9 @@ namespace PlatformerExample
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 1000;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -56,19 +58,48 @@ namespace PlatformerExample
 
             // TODO: use this.Content to load your game content here
             var t = Content.Load<Texture2D>("spritesheet");
-            sheet = new SpriteSheet(t, 21, 21, 3, 2);
+            sheet = new SpriteSheet(t, 21, 21, 1, 2);
 
-            // Create the player with the corresponding frames from the spritesheet
-            var playerFrames = from index in Enumerable.Range(19, 30) select sheet[index];
-            player = new Player(playerFrames);
-
+            
             // Load the level
-            tilemap = Content.Load<Tilemap>("level1");
+            tilemap = Content.Load<Tilemap>("level3");
 
+            foreach(ObjectGroup objectGroup in tilemap.ObjectGroups)
+            {
+                if(objectGroup.Name == "Platforms") //create all of the tiles from the tile objects
+                {
+                    foreach (GroupObject groupObject in objectGroup.Objects)
+                    {
+                        BoundingRectangle bounds = new BoundingRectangle(
+                            groupObject.X,
+                            groupObject.Y,
+                            groupObject.Width,
+                            groupObject.Height
+                        );
+                        platforms.Add(new Platform(bounds, sheet[groupObject.SheetIndex]));
+                    }
 
-            platforms.Add(new Platform(new BoundingRectangle(80, 300, 105, 21), sheet[1]));
-            platforms.Add(new Platform(new BoundingRectangle(280, 400, 84, 21), sheet[2]));
-            platforms.Add(new Platform(new BoundingRectangle(160, 250, 42, 21), sheet[3]));
+                    world = new AxisList();
+                    foreach (Platform platform in platforms)
+                    {
+                        world.AddGameObject(platform);
+                    }
+                }
+                else if(objectGroup.Name == "Spawn")// give the player the starting point from the object
+                {
+                    GroupObject groupObject = objectGroup.Objects[0];
+                    // Create the player with the corresponding frames from the spritesheet
+                    var playerFrames = from index in Enumerable.Range(139, 150) select sheet[index];
+                    //List<Sprite> playerFramesList = playerFrames.ToList();
+                    //playerFramesList.Add(sheet[112]);
+                    player = new Player(playerFrames, groupObject.X, groupObject.Y);
+                }
+                else if(objectGroup.Name == "End") //get the ending location which will end the game
+                {
+                    GroupObject groupObject = objectGroup.Objects[0];
+                }
+            }
+            
 
             // Add the platforms to the axis list
             world = new AxisList();
@@ -77,7 +108,7 @@ namespace PlatformerExample
                 world.AddGameObject(platform);
             }
 
-            tileset = Content.Load<Tileset>("tiledspritesheet"); 
+            tileset = Content.Load<Tileset>("BetterSet2"); 
         }
 
         /// <summary>
@@ -118,7 +149,7 @@ namespace PlatformerExample
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // Calculate and apply the world/view transform
-            var offset = new Vector2(200, 300) - player.Position;
+            var offset = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2) - player.Position;
             var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null,null, t);
 
@@ -126,8 +157,8 @@ namespace PlatformerExample
             tilemap.Draw(spriteBatch);
 
             // Draw the platforms 
-            var platformQuery = world.QueryRange(player.Position.X - 221, player.Position.X + 400);
-            foreach(Platform platform in platformQuery)
+            var platformQuery = world.QueryRange(player.Position.X - GraphicsDevice.Viewport.Width / 2, player.Position.X + GraphicsDevice.Viewport.Width / 2);
+            foreach (Platform platform in platformQuery)
             {   
                 platform.Draw(spriteBatch);
             }
@@ -136,12 +167,7 @@ namespace PlatformerExample
             // Draw the player
             player.Draw(spriteBatch);
             
-            // Draw an arbitrary range of sprites and corresponding tiles
-            for(var i = 17; i < 30; i++)
-            {
-                sheet[i].Draw(spriteBatch, new Vector2(i*25, 25), Color.White);
-                tileset[i].Draw(spriteBatch, new Vector2(i * 25, 50), Color.White);
-            }
+            
 
 
             spriteBatch.End();
