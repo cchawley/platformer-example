@@ -27,8 +27,7 @@ namespace PlatformLibrary
             // Read the layer count and create collections to hold layers
             var layerCount = input.ReadInt32();
             var layers = new TilemapLayer[layerCount];
-            var layersById = new Dictionary<uint, TilemapLayer>();
-            var layersByName = new Dictionary<string, TilemapLayer>();
+            
 
             // Read the layer data
             for (var i = 0; i < layerCount; i++)

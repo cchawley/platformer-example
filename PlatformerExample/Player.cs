@@ -87,7 +87,7 @@ namespace PlatformerExample
         /// <summary>
         /// Gets and sets the position of the player on-screen
         /// </summary>
-        public Vector2 Position = new Vector2(1500, 950);
+        public Vector2 Position = new Vector2();
 
         public BoundingRectangle Bounds => new BoundingRectangle(Position - 1.8f * BoxCalc, 35, 41);
 
@@ -145,10 +145,12 @@ namespace PlatformerExample
                 case VerticalMovementState.Falling:
                     Position.Y += speed;
                     // TODO: This needs to be replaced with collision logic
+                    /*
                     if (Position.Y > 1000)
                     {
                         Position.Y = 1000;
                     }
+                    
                     if (Position.X - 16 < 0)
                     {
                         Position.X = 16;
@@ -157,6 +159,7 @@ namespace PlatformerExample
                     {
                         Position.X = 1580;
                     }
+                    */
                     break;
             }
 
@@ -168,10 +171,11 @@ namespace PlatformerExample
                     animationState = PlayerState.JumpingLeft;
                 else animationState = PlayerState.WalkingLeft;
                 Position.X -= speed;
+                /*
                 if (Position.X - 16 < 0)
                 {
                     Position.X = 16;
-                }
+                }*/
             }
             else if (keyboard.IsKeyDown(Keys.Right))
             {
@@ -270,7 +274,7 @@ namespace PlatformerExample
 #if VISUAL_DEBUG 
             VisualDebugging.DrawRectangle(spriteBatch, Bounds, Color.Red);
 #endif
-            frames[currentFrame].Draw(spriteBatch, Position, color, 0, origin, 2, spriteEffects, 1);
+            frames[currentFrame].Draw(spriteBatch, Position, color, 0, origin, 1, spriteEffects, 1);
         }
 
     }

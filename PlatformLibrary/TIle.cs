@@ -63,10 +63,10 @@ namespace PlatformLibrary
         /// <param name="layerDepth">The sorting layer of the tile</param>
         public void Draw(SpriteBatch SpriteBatch, Rectangle destinationRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effects, float layerDepth)
         {
-            if(texture != null)
-            {
+            
+            
                 SpriteBatch.Draw(texture, destinationRectangle, source, color, rotation, origin, effects, layerDepth);
-            }
+            
             
         }
 
@@ -80,10 +80,10 @@ namespace PlatformLibrary
         /// <param name="color">The color</param>
         public void Draw(SpriteBatch SpriteBatch, Rectangle destinationRectangle, Color color)
         {
-            if (texture != null)
-            {
+            
+            
                 SpriteBatch.Draw(texture, destinationRectangle, source, color);
-            }
+            
         }
 
         /// <summary>
@@ -96,10 +96,10 @@ namespace PlatformLibrary
         /// <param name="color">The color</param>
         public void Draw(SpriteBatch SpriteBatch, Vector2 position, Color color)
         {
-            if (texture != null)
-            {
+          
+            
                 SpriteBatch.Draw(texture, position, source, color);
-            }
+            
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace PlatformLibrary
         /// <param name="layerDepth">The sorting layer of the tile</param>
         public void Draw(SpriteBatch SpriteBatch, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
         {
-            if (texture != null)
-            {
+            
+            
                 SpriteBatch.Draw(texture, position, source, color, rotation, origin, scale, effects, layerDepth);
-            }
+            
         }
 
         #endregion
