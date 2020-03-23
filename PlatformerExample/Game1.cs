@@ -6,6 +6,7 @@ using System.Linq;
 using System.Diagnostics;
 using PlatformLibrary;
 
+
 namespace PlatformerExample
 {
     /// <summary>
@@ -24,6 +25,7 @@ namespace PlatformerExample
         AxisList world;
         public uint endX;
         public uint endY;
+        GhostEnemy ghost;
         
 
 
@@ -102,6 +104,12 @@ namespace PlatformerExample
                     //playerFramesList.Add(sheet[112]);
                     player = new Player(playerFrames, groupObject.X, groupObject.Y);
                 }
+                else if(objectGroup.Name == "Ghost")
+                {
+                    GroupObject groupObject = objectGroup.Objects[0];
+                    var GhostFrames = from index in Enumerable.Range(445, 449) select sheet[index];
+                    ghost = new GhostEnemy(GhostFrames, player, groupObject.X, groupObject.Y);
+                }
                 else if(objectGroup.Name == "End") //get the ending location which will end the game
                 {
                     GroupObject groupObject = objectGroup.Objects[0];
@@ -142,13 +150,36 @@ namespace PlatformerExample
 
             // TODO: Add your update logic here
             player.Update(gameTime);
+            
 
             // Check for platform collisions
             var platformQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
             player.CheckForPlatformCollision(platformQuery);
 
-            
+            ghost.Update(gameTime);
 
+            if (ghost.Bounds.CollidesWith(player.Bounds)) // check for collisions with the player
+            {
+                player.gameState = 2;
+                /*             
+                if (player.Bounds.Y + player.Bounds.Height <= Bounds.Y)
+                {
+                    //logic player bouncing off head, but ghost wont be dying, can bounce off ghost heads
+                    player.Position.Y -= 1;
+                    player.playerBounce = 1;
+                }                   
+                else if (player.Bounds.X >= Bounds.X + Bounds.Width) //&& player.Bounds.Y > Bounds.Y
+                {
+                    //logic for player death
+                    player.gameState = 2;
+                }
+                else if (player.Bounds.X + player.Bounds.Width <= Bounds.X) //&& player.Bounds.Y > Bounds.Y - 18
+                {
+                    //logic for player death
+                    player.gameState = 2;
+                }
+                */
+            }
             base.Update(gameTime);
         }
 
@@ -178,6 +209,7 @@ namespace PlatformerExample
             
             // Draw the player
             player.Draw(spriteBatch);
+            ghost.Draw(spriteBatch);
 
             if (player.gameState == 1)  //if you have won, draw the you win
             {

@@ -10,7 +10,7 @@ using PlatformLibrary;
 using PlatformerExample;
 //using MonoGameWindoStarter;
 
-namespace MonoGameWindowsStarter
+namespace PlatformerExample
 {
     enum GhostState
     {
@@ -75,11 +75,14 @@ namespace MonoGameWindowsStarter
         /// Constructs a new ghost
         /// </summary>
         /// <param name="frames">The sprite frames associated with the player</param>
-        public GhostEnemy(IEnumerable<Sprite> frames, Player player)
+        public GhostEnemy(IEnumerable<Sprite> frames, Player player, uint x, uint y)
         {
             this.frames = frames.ToArray();
             animationState = GhostState.WalkingLeft;
             this.player = player;
+            Position.X = x + 10;
+            Position.Y = y + 21;
+
         }
 
         /// <summary>
@@ -89,8 +92,7 @@ namespace MonoGameWindowsStarter
         public void Update(GameTime gameTime)
         {
 
-            if (player.gameState == 0) // if the game is still going
-            {
+            
                 if (animationState == GhostState.WalkingLeft)
                 {
                     Position.X -= speed;
@@ -105,13 +107,14 @@ namespace MonoGameWindowsStarter
                 {
                     Position.X += speed;
                     origin = new Vector2(10, 20);
-                    if (Position.X + 20 > 1600)
+                    if (Position.X + 20 > 1040)
                     {
-                        Position.X = 1580;
+                        Position.X = 1020;
                         animationState = GhostState.WalkingLeft;
                     }
                 }
 
+                /*
                 if (Bounds.CollidesWith(player.Bounds)) // check for collisions with the player
                 {
                     player.gameState = 2;
@@ -132,11 +135,12 @@ namespace MonoGameWindowsStarter
                         //logic for player death
                         player.gameState = 2;
                     }
-                    */
+                    
                 }
+        */
 
 
-            }
+            
             switch (animationState)
             {
                 case GhostState.WalkingLeft:
