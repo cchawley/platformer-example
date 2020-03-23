@@ -153,10 +153,7 @@ namespace PlatformerExample
                         Position.Y += speed;
                         // TODO: This needs to be replaced with collision logic
                         
-                        if (Position.Y > 1000)
-                        {
-                            Position.Y = 1000;
-                        }
+                        
 
                         if (Position.X - 16 < 0)
                         {
@@ -210,6 +207,10 @@ namespace PlatformerExample
             {
                 gameState = 1;
                 speed = 0;
+            }
+            if(Position.Y > 1100)
+            {
+                gameState = 3;
             }
 
             // Apply animations

@@ -188,7 +188,13 @@ namespace PlatformerExample
             if (player.gameState == 2) //if you have lost, draw the you lose
             {
                 //spriteBatch.Draw(YouLose, lose, Color.White);
-                spriteBatch.DrawString(spriteFont, "You Lose! :(", player.Position, Color.Red);
+                spriteBatch.DrawString(spriteFont, "Ghostie got you :(", player.Position, Color.Red);
+            }
+
+            if (player.gameState == 3) //if you have lost, draw the you lose
+            {
+                //spriteBatch.Draw(YouLose, lose, Color.White);
+                spriteBatch.DrawString(spriteFont, "You fell to your death :(", player.Position, Color.Red);
             }
 
 
