@@ -76,7 +76,7 @@ namespace PlatformerExample
                             groupObject.Width,
                             groupObject.Height
                         );
-                        platforms.Add(new Platform(bounds, sheet[groupObject.SheetIndex]));
+                        platforms.Add(new Platform(bounds, sheet[groupObject.SheetIndex - 1]));
                     }
 
                     world = new AxisList();
