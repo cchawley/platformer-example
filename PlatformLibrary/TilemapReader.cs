@@ -70,12 +70,12 @@ namespace PlatformLibrary
                 var groupObjectsCount = input.ReadUInt32();
                 for (var j = 0; j < groupObjectsCount; j++)
                 {
+                    var sheetIndex = input.ReadInt32();
+                    var x = input.ReadUInt32();
+                    var y = input.ReadUInt32();
                     var width = input.ReadUInt32();
                     var height = input.ReadUInt32();
-                    var x = input.ReadUInt32();
-                    var y = input.ReadUInt32();                  
-                    var sheetIndex = input.ReadInt32();
-
+                                                       
                     groupObjects.Add(new GroupObject(sheetIndex, x, y, width, height));
                 }
                 objectGroups.Add(new ObjectGroup(name, groupObjects.ToArray()));

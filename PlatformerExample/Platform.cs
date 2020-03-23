@@ -57,7 +57,7 @@ namespace PlatformerExample
 #endif
             for (int i = 0; i < tileCount; i++)
             {
-                sprite.Draw(spriteBatch, new Vector2(bounds.X + i * sprite.Width, bounds.Y), Color.Purple);
+                sprite.Draw(spriteBatch, new Vector2(bounds.X + i * sprite.Width, bounds.Y), Color.White);
             }
 
         }
