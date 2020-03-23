@@ -14,6 +14,7 @@ namespace PlatformerExample
     public class Game1 : Game
     {
         SpriteSheet sheet;
+        SpriteFont spriteFont;
         Tileset tileset;
         Tilemap tilemap;
         Player player;
@@ -21,6 +22,10 @@ namespace PlatformerExample
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         AxisList world;
+        public uint endX;
+        public uint endY;
+        
+
 
         public Game1()
         {
@@ -55,6 +60,9 @@ namespace PlatformerExample
 #endif
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //load in spritefont
+            spriteFont = Content.Load<SpriteFont>("File");
 
             // TODO: use this.Content to load your game content here
             var t = Content.Load<Texture2D>("spritesheet");
@@ -97,6 +105,8 @@ namespace PlatformerExample
                 else if(objectGroup.Name == "End") //get the ending location which will end the game
                 {
                     GroupObject groupObject = objectGroup.Objects[0];
+                    endX = groupObject.X;
+                    endY = groupObject.Y;
                 }
             }
             
@@ -136,7 +146,9 @@ namespace PlatformerExample
             // Check for platform collisions
             var platformQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
             player.CheckForPlatformCollision(platformQuery);
+
             
+
             base.Update(gameTime);
         }
 
@@ -166,8 +178,18 @@ namespace PlatformerExample
             
             // Draw the player
             player.Draw(spriteBatch);
-            
-            
+
+            if (player.gameState == 1)  //if you have won, draw the you win
+            {
+                //spriteBatch.Draw(YouWin, win, Color.White);
+                spriteBatch.DrawString(spriteFont, "You Win! :)", player.Position, Color.White);
+            }
+
+            if (player.gameState == 2) //if you have lost, draw the you lose
+            {
+                //spriteBatch.Draw(YouLose, lose, Color.White);
+                spriteBatch.DrawString(spriteFont, "You Lose! :(", player.Position, Color.Red);
+            }
 
 
             spriteBatch.End();
