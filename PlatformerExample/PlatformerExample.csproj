@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="GhostEnemy.cs" />
+    <Compile Include="particle.cs" />
+    <Compile Include="ParticleSystem.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

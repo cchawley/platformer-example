@@ -283,7 +283,7 @@ namespace PlatformerExample
 #if VISUAL_DEBUG 
             VisualDebugging.DrawRectangle(spriteBatch, Bounds, Color.Red);
 #endif
-            frames[currentFrame].Draw(spriteBatch, Position, color, 0, origin, 1, spriteEffects, 1);
+            frames[currentFrame].Draw(spriteBatch, Position, color, 0, origin, 2, spriteEffects, 1);
         }
 
     }
