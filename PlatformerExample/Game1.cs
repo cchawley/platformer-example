@@ -52,6 +52,12 @@ namespace PlatformerExample
         /// </summary>
         Texture2D NormalParticle;
 
+        /// <summary>
+        /// particle for explosion
+        /// </summary>
+        Texture2D StarParticle;
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -183,7 +189,8 @@ namespace PlatformerExample
 
 
             // particle info for player explosion
-            PlayerExplosionParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
+            StarParticle = Content.Load<Texture2D>("Star");
+            PlayerExplosionParticles = new ParticleSystem(GraphicsDevice, 10, StarParticle);
             PlayerExplosionParticles.Emitter = new Vector2(100, 100);
             PlayerExplosionParticles.SpawnPerFrame = 4;
 
@@ -192,13 +199,13 @@ namespace PlatformerExample
             {
                 particle.Position = new Vector2(player.Position.X, player.Position.Y);
                 particle.Velocity = new Vector2(
-                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()), 
-                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()) 
+                    MathHelper.Lerp(-50, 50, (float)random.NextDouble()), 
+                    MathHelper.Lerp(-50, 50, (float)random.NextDouble()) 
                     );
                 particle.Acceleration = 2.0f * new Vector2(0, (float)-random.NextDouble());
                 particle.Color = Color.OrangeRed;
-                particle.Scale = 1.5f;
-                particle.Life = 8.0f;
+                particle.Scale = 0.5f;
+                particle.Life = 0.2f;
             };
 
             // Set the UpdateParticle method
