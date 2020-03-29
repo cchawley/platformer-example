@@ -40,7 +40,7 @@ namespace PlatformerExample
         /// <summary>
         /// particle system for player dying
         /// </summary>
-        ParticleSystem PlayerExplosionParticles;
+        ParticleSystem Rain;
 
         /// <summary>
         /// particle system for when player reaches the door and wins
@@ -55,7 +55,7 @@ namespace PlatformerExample
         /// <summary>
         /// particle for explosion
         /// </summary>
-        Texture2D StarParticle;
+        Texture2D RainParticle;
 
 
         public Game1()
@@ -189,31 +189,34 @@ namespace PlatformerExample
 
 
             // particle info for player explosion
-            StarParticle = Content.Load<Texture2D>("Star");
-            PlayerExplosionParticles = new ParticleSystem(GraphicsDevice, 10, StarParticle);
-            PlayerExplosionParticles.Emitter = new Vector2(100, 100);
-            PlayerExplosionParticles.SpawnPerFrame = 4;
+            RainParticle = Content.Load<Texture2D>("rain drop");
+            Rain = new ParticleSystem(GraphicsDevice, 100, RainParticle);
+            Rain.Emitter = new Vector2(100, 100);
+            Rain.SpawnPerFrame = 4;
 
             // Set the SpawnParticle method
-            PlayerExplosionParticles.SpawnParticle = (ref Particle particle) =>
+            Rain.SpawnParticle = (ref Particle particle) =>
             {
-                particle.Position = new Vector2(player.Position.X, player.Position.Y);
-                particle.Velocity = new Vector2(
-                    MathHelper.Lerp(-50, 50, (float)random.NextDouble()), 
-                    MathHelper.Lerp(-50, 50, (float)random.NextDouble()) 
+                particle.Position = new Vector2(
+                    MathHelper.Lerp(0, 2000, (float)random.NextDouble()),
+                    MathHelper.Lerp(0, 2000, (float)random.NextDouble())
                     );
-                particle.Acceleration = 2.0f * new Vector2(0, (float)-random.NextDouble());
+                particle.Velocity = new Vector2(
+                    MathHelper.Lerp(-1, 1, (float)random.NextDouble()), 
+                    MathHelper.Lerp(-1, 1, (float)random.NextDouble()) 
+                    );
+                particle.Acceleration = 2.5f * new Vector2(0, (float)-random.NextDouble());
                 particle.Color = Color.OrangeRed;
                 particle.Scale = 0.5f;
-                particle.Life = 0.2f;
+                particle.Life = 20.0f;
             };
 
             // Set the UpdateParticle method
-            PlayerExplosionParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
+            Rain.UpdateParticle = (float deltaT, ref Particle particle) =>
             {
                 particle.Velocity += deltaT * particle.Acceleration;
-                particle.Position += deltaT * particle.Velocity;
-                particle.Scale -= deltaT;
+                particle.Position -= deltaT * particle.Velocity;
+                particle.Scale = particle.Scale;
                 particle.Life -= deltaT;
             };
 
@@ -278,7 +281,7 @@ namespace PlatformerExample
             ghost.Update(gameTime);
 
             DoorParticles.Update(gameTime);
-            PlayerExplosionParticles.Update(gameTime);
+            Rain.Update(gameTime);
             GhostParticles.Update(gameTime);
 
             if (ghost.Bounds.CollidesWith(player.Bounds)) // check for collisions with the player
@@ -315,7 +318,7 @@ namespace PlatformerExample
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // Calculate and apply the world/view transform
-            var offset = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2) - player.Position;
+            var offset = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2) - player.Position;          
             var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null,null, t);
 
@@ -334,9 +337,10 @@ namespace PlatformerExample
             player.Draw(spriteBatch);
             ghost.Draw(spriteBatch);
             GhostParticles.Draw();
+            Rain.Draw();
 
-            
-            
+
+
 
             if (player.gameState == 1)  //if you have won, draw the you win
             {
@@ -348,15 +352,13 @@ namespace PlatformerExample
             if (player.gameState == 2) //if you have lost, draw the you lose
             {
                 //spriteBatch.Draw(YouLose, lose, Color.White);
-                spriteBatch.DrawString(spriteFont, "Ghostie got you :(", player.Position, Color.Red);
-                PlayerExplosionParticles.Draw();
+                spriteBatch.DrawString(spriteFont, "Ghostie got you :(", player.Position, Color.Red);              
             }
 
             if (player.gameState == 3) //if you have lost, draw the you lose
             {
                 //spriteBatch.Draw(YouLose, lose, Color.White);
-                spriteBatch.DrawString(spriteFont, "You fell to your death :(", player.Position, Color.Red);
-                PlayerExplosionParticles.Draw();
+                spriteBatch.DrawString(spriteFont, "You fell to your death :(", player.Position, Color.Red);             
             }
 
 
