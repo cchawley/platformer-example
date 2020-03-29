@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using PlatformLibrary;
+using System;
 
 
 namespace PlatformerExample
@@ -26,8 +27,30 @@ namespace PlatformerExample
         public uint endX;
         public uint endY;
         GhostEnemy ghost;
-        
+        /// <summary>
+        /// A random number generator used by the system 
+        /// </summary>
+        Random random = new Random();
 
+        /// <summary>
+        /// particle system for the ghost
+        /// </summary>
+        ParticleSystem GhostParticles;
+
+        /// <summary>
+        /// particle system for player dying
+        /// </summary>
+        ParticleSystem PlayerExplosionParticles;
+
+        /// <summary>
+        /// particle system for when player reaches the door and wins
+        /// </summary>
+        ParticleSystem DoorParticles;
+
+        /// <summary>
+        /// particle option 1, basic particle
+        /// </summary>
+        Texture2D NormalParticle;
 
         public Game1()
         {
@@ -126,7 +149,40 @@ namespace PlatformerExample
                 world.AddGameObject(platform);
             }
 
-            tileset = Content.Load<Tileset>("BetterSet2"); 
+            tileset = Content.Load<Tileset>("BetterSet2");
+
+            // particle information for when player reaches the door
+            
+                NormalParticle = Content.Load<Texture2D>("particle");
+                DoorParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
+                DoorParticles.Emitter = new Vector2(100, 100);
+                DoorParticles.SpawnPerFrame = 4;
+
+                
+                
+                    // Set the SpawnParticle method
+                    DoorParticles.SpawnParticle = (ref Particle particle) =>
+                {
+                    particle.Position = new Vector2(1020, 200);
+                    particle.Velocity = new Vector2(
+                        MathHelper.Lerp(-100, 100, (float)random.NextDouble()), // X between -50 and 50
+                        MathHelper.Lerp(0, 200, (float)random.NextDouble()) // Y between 0 and 100
+                        );
+                    particle.Acceleration = 0.4f * new Vector2(0, (float)-random.NextDouble());
+                    particle.Color = Color.Gold;
+                    particle.Scale = 2f;
+                    particle.Life = 3.0f;
+                };
+
+                // Set the UpdateParticle method
+                DoorParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
+                {
+                    particle.Velocity += deltaT * particle.Acceleration;
+                    particle.Position += deltaT * particle.Velocity;
+                    particle.Scale -= deltaT;
+                    particle.Life -= deltaT;
+                };
+            
         }
 
         /// <summary>
@@ -157,6 +213,8 @@ namespace PlatformerExample
             player.CheckForPlatformCollision(platformQuery);
 
             ghost.Update(gameTime);
+
+            DoorParticles.Update(gameTime);
 
             if (ghost.Bounds.CollidesWith(player.Bounds)) // check for collisions with the player
             {
@@ -210,6 +268,7 @@ namespace PlatformerExample
             // Draw the player
             player.Draw(spriteBatch);
             ghost.Draw(spriteBatch);
+            DoorParticles.Draw();
 
             if (player.gameState == 1)  //if you have won, draw the you win
             {

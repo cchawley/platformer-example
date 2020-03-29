@@ -117,8 +117,6 @@ namespace PlatformerExample
             if (gameState == 0)
             {
 
-
-
                 // Vertical movement
                 switch (verticalState)
                 {
@@ -150,11 +148,7 @@ namespace PlatformerExample
                         }
                         break;
                     case VerticalMovementState.Falling:
-                        Position.Y += speed;
-                        // TODO: This needs to be replaced with collision logic
-                        
-                        
-
+                        Position.Y += speed;                                                                
                         if (Position.X - 16 < 0)
                         {
                             Position.X = 16;
