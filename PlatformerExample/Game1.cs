@@ -153,21 +153,18 @@ namespace PlatformerExample
 
             // particle information for when player reaches the door
             
-                NormalParticle = Content.Load<Texture2D>("particle");
-                DoorParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
-                DoorParticles.Emitter = new Vector2(100, 100);
-                DoorParticles.SpawnPerFrame = 4;
-
-
-            
-            
+            NormalParticle = Content.Load<Texture2D>("particle");
+            DoorParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
+            DoorParticles.Emitter = new Vector2(100, 100);
+            DoorParticles.SpawnPerFrame = 4;
+                    
                 // Set the SpawnParticle method
-                DoorParticles.SpawnParticle = (ref Particle particle) =>
+            DoorParticles.SpawnParticle = (ref Particle particle) =>
             {
                 particle.Position = new Vector2(800, 450);
                 particle.Velocity = new Vector2(
-                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()), // X between -50 and 50
-                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()) // Y between 0 and 100
+                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()), 
+                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()) 
                     );
                 particle.Acceleration = 2.0f * new Vector2(0, (float)-random.NextDouble());
                 particle.Color = Color.Gold;
@@ -176,14 +173,72 @@ namespace PlatformerExample
             };
 
                 // Set the UpdateParticle method
-                DoorParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
-                {
-                    particle.Velocity += deltaT * particle.Acceleration;
-                    particle.Position += deltaT * particle.Velocity;
-                    particle.Scale -= deltaT;
-                    particle.Life -= deltaT;
-                };
-            
+            DoorParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
+            {
+                particle.Velocity += deltaT * particle.Acceleration;
+                particle.Position += deltaT * particle.Velocity;
+                particle.Scale -= deltaT;
+                particle.Life -= deltaT;
+            };
+
+
+            // particle info for player explosion
+            PlayerExplosionParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
+            PlayerExplosionParticles.Emitter = new Vector2(100, 100);
+            PlayerExplosionParticles.SpawnPerFrame = 4;
+
+            // Set the SpawnParticle method
+            PlayerExplosionParticles.SpawnParticle = (ref Particle particle) =>
+            {
+                particle.Position = new Vector2(player.Position.X, player.Position.Y);
+                particle.Velocity = new Vector2(
+                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()), 
+                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()) 
+                    );
+                particle.Acceleration = 2.0f * new Vector2(0, (float)-random.NextDouble());
+                particle.Color = Color.OrangeRed;
+                particle.Scale = 1.5f;
+                particle.Life = 8.0f;
+            };
+
+            // Set the UpdateParticle method
+            PlayerExplosionParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
+            {
+                particle.Velocity += deltaT * particle.Acceleration;
+                particle.Position += deltaT * particle.Velocity;
+                particle.Scale -= deltaT;
+                particle.Life -= deltaT;
+            };
+
+
+            // particle info for ghost
+            GhostParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
+            GhostParticles.Emitter = new Vector2(100, 100);
+            GhostParticles.SpawnPerFrame = 4;
+
+            // Set the SpawnParticle method
+            GhostParticles.SpawnParticle = (ref Particle particle) =>
+            {
+                particle.Position = new Vector2(ghost.Position.X - 200, ghost.Position.Y - 360);
+                particle.Velocity = new Vector2(
+                    MathHelper.Lerp(-50, 50, (float)random.NextDouble()), 
+                    MathHelper.Lerp(-50, 50, (float)random.NextDouble()) 
+                    );
+                particle.Acceleration = 1.0f * new Vector2(0, (float)-random.NextDouble());
+                particle.Color = Color.GhostWhite;
+                particle.Scale = 0.5f;
+                particle.Life = 0.5f;
+            };
+
+            // Set the UpdateParticle method
+            GhostParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
+            {
+                particle.Velocity += deltaT * particle.Acceleration;
+                particle.Position += deltaT * particle.Velocity;
+                particle.Scale -= deltaT;
+                particle.Life -= deltaT;
+            };
+
         }
 
         /// <summary>
@@ -216,6 +271,8 @@ namespace PlatformerExample
             ghost.Update(gameTime);
 
             DoorParticles.Update(gameTime);
+            PlayerExplosionParticles.Update(gameTime);
+            GhostParticles.Update(gameTime);
 
             if (ghost.Bounds.CollidesWith(player.Bounds)) // check for collisions with the player
             {
@@ -269,6 +326,7 @@ namespace PlatformerExample
             // Draw the player
             player.Draw(spriteBatch);
             ghost.Draw(spriteBatch);
+            GhostParticles.Draw();
 
             
             
@@ -276,7 +334,7 @@ namespace PlatformerExample
             if (player.gameState == 1)  //if you have won, draw the you win
             {
                 //spriteBatch.Draw(YouWin, win, Color.White);
-                spriteBatch.DrawString(spriteFont, "You Win! :)", player.Position, Color.White);
+                spriteBatch.DrawString(spriteFont, "You Win! :)", player.Position, Color.Gold);
                 DoorParticles.Draw();
             }
 
@@ -284,12 +342,14 @@ namespace PlatformerExample
             {
                 //spriteBatch.Draw(YouLose, lose, Color.White);
                 spriteBatch.DrawString(spriteFont, "Ghostie got you :(", player.Position, Color.Red);
+                PlayerExplosionParticles.Draw();
             }
 
             if (player.gameState == 3) //if you have lost, draw the you lose
             {
                 //spriteBatch.Draw(YouLose, lose, Color.White);
                 spriteBatch.DrawString(spriteFont, "You fell to your death :(", player.Position, Color.Red);
+                PlayerExplosionParticles.Draw();
             }
 
 
