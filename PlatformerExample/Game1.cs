@@ -158,21 +158,22 @@ namespace PlatformerExample
                 DoorParticles.Emitter = new Vector2(100, 100);
                 DoorParticles.SpawnPerFrame = 4;
 
-                
-                
-                    // Set the SpawnParticle method
-                    DoorParticles.SpawnParticle = (ref Particle particle) =>
-                {
-                    particle.Position = new Vector2(1020, 200);
-                    particle.Velocity = new Vector2(
-                        MathHelper.Lerp(-100, 100, (float)random.NextDouble()), // X between -50 and 50
-                        MathHelper.Lerp(0, 200, (float)random.NextDouble()) // Y between 0 and 100
-                        );
-                    particle.Acceleration = 0.4f * new Vector2(0, (float)-random.NextDouble());
-                    particle.Color = Color.Gold;
-                    particle.Scale = 2f;
-                    particle.Life = 3.0f;
-                };
+
+            
+            
+                // Set the SpawnParticle method
+                DoorParticles.SpawnParticle = (ref Particle particle) =>
+            {
+                particle.Position = new Vector2(800, 450);
+                particle.Velocity = new Vector2(
+                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()), // X between -50 and 50
+                    MathHelper.Lerp(-200, 200, (float)random.NextDouble()) // Y between 0 and 100
+                    );
+                particle.Acceleration = 2.0f * new Vector2(0, (float)-random.NextDouble());
+                particle.Color = Color.Gold;
+                particle.Scale = 1.5f;
+                particle.Life = 8.0f;
+            };
 
                 // Set the UpdateParticle method
                 DoorParticles.UpdateParticle = (float deltaT, ref Particle particle) =>
@@ -268,12 +269,15 @@ namespace PlatformerExample
             // Draw the player
             player.Draw(spriteBatch);
             ghost.Draw(spriteBatch);
-            DoorParticles.Draw();
+
+            
+            
 
             if (player.gameState == 1)  //if you have won, draw the you win
             {
                 //spriteBatch.Draw(YouWin, win, Color.White);
                 spriteBatch.DrawString(spriteFont, "You Win! :)", player.Position, Color.White);
+                DoorParticles.Draw();
             }
 
             if (player.gameState == 2) //if you have lost, draw the you lose
