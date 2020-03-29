@@ -57,6 +57,11 @@ namespace PlatformerExample
         /// </summary>
         Texture2D RainParticle;
 
+        /// <summary>
+        /// particle for fire/ghost movement
+        /// </summary>
+        Texture2D FireParticle;
+
 
         public Game1()
         {
@@ -188,7 +193,7 @@ namespace PlatformerExample
             };
 
 
-            // particle info for player explosion
+            // particle info for rain
             RainParticle = Content.Load<Texture2D>("rain drop");
             Rain = new ParticleSystem(GraphicsDevice, 5000, RainParticle);
             Rain.Emitter = new Vector2(100, 100);
@@ -216,20 +221,24 @@ namespace PlatformerExample
             {
                 particle.Velocity += deltaT * particle.Acceleration;
                 particle.Position -= deltaT * particle.Velocity;
-                particle.Scale = particle.Scale;
+                //particle.Scale = particle.Scale;
                 particle.Life -= deltaT;
             };
 
 
             // particle info for ghost
-            GhostParticles = new ParticleSystem(GraphicsDevice, 1000, NormalParticle);
+            FireParticle = Content.Load<Texture2D>("Fire");
+            GhostParticles = new ParticleSystem(GraphicsDevice, 1000, FireParticle);
             GhostParticles.Emitter = new Vector2(100, 100);
             GhostParticles.SpawnPerFrame = 4;
 
             // Set the SpawnParticle method
             GhostParticles.SpawnParticle = (ref Particle particle) =>
             {
-                particle.Position = new Vector2(ghost.Position.X, ghost.Position.Y - 14);
+                particle.Position = new Vector2(
+                    MathHelper.Lerp(ghost.Position.X - 42, ghost.Position.X , (float)random.NextDouble()),
+                    MathHelper.Lerp(ghost.Position.Y - 42, ghost.Position.Y, (float)random.NextDouble())
+                    );
                 particle.Velocity = new Vector2(
                     MathHelper.Lerp(-50, 50, (float)random.NextDouble()), 
                     MathHelper.Lerp(-50, 50, (float)random.NextDouble()) 
