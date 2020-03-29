@@ -190,7 +190,7 @@ namespace PlatformerExample
 
             // particle info for player explosion
             RainParticle = Content.Load<Texture2D>("rain drop");
-            Rain = new ParticleSystem(GraphicsDevice, 100, RainParticle);
+            Rain = new ParticleSystem(GraphicsDevice, 5000, RainParticle);
             Rain.Emitter = new Vector2(100, 100);
             Rain.SpawnPerFrame = 4;
 
@@ -203,9 +203,9 @@ namespace PlatformerExample
                     );
                 particle.Velocity = new Vector2(
                     MathHelper.Lerp(0, 0, (float)random.NextDouble()), 
-                    MathHelper.Lerp(-50, -25, (float)random.NextDouble()) 
+                    MathHelper.Lerp(-100, -25, (float)random.NextDouble()) 
                     );
-                particle.Acceleration = 2.5f * new Vector2(0, (float)-random.NextDouble());
+                particle.Acceleration = 0.0f * new Vector2(0, (float)-random.NextDouble());
                 particle.Color = Color.OrangeRed;
                 particle.Scale = 0.5f;
                 particle.Life = 200.0f;
