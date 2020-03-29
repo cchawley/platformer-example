@@ -167,7 +167,7 @@ namespace PlatformerExample
                 // Set the SpawnParticle method
             DoorParticles.SpawnParticle = (ref Particle particle) =>
             {
-                particle.Position = new Vector2(800, 450);
+                particle.Position = new Vector2(player.Position.X, player.Position.Y);
                 particle.Velocity = new Vector2(
                     MathHelper.Lerp(-200, 200, (float)random.NextDouble()), 
                     MathHelper.Lerp(-200, 200, (float)random.NextDouble()) 
@@ -198,17 +198,17 @@ namespace PlatformerExample
             Rain.SpawnParticle = (ref Particle particle) =>
             {
                 particle.Position = new Vector2(
-                    MathHelper.Lerp(0, 2000, (float)random.NextDouble()),
-                    MathHelper.Lerp(0, 2000, (float)random.NextDouble())
+                    MathHelper.Lerp(0, 1040, (float)random.NextDouble()),
+                    MathHelper.Lerp(0, 1, (float)random.NextDouble())
                     );
                 particle.Velocity = new Vector2(
-                    MathHelper.Lerp(-1, 1, (float)random.NextDouble()), 
-                    MathHelper.Lerp(-1, 1, (float)random.NextDouble()) 
+                    MathHelper.Lerp(0, 0, (float)random.NextDouble()), 
+                    MathHelper.Lerp(-50, -25, (float)random.NextDouble()) 
                     );
                 particle.Acceleration = 2.5f * new Vector2(0, (float)-random.NextDouble());
                 particle.Color = Color.OrangeRed;
                 particle.Scale = 0.5f;
-                particle.Life = 20.0f;
+                particle.Life = 200.0f;
             };
 
             // Set the UpdateParticle method
@@ -229,7 +229,7 @@ namespace PlatformerExample
             // Set the SpawnParticle method
             GhostParticles.SpawnParticle = (ref Particle particle) =>
             {
-                particle.Position = new Vector2(ghost.Position.X - 200, ghost.Position.Y - 360);
+                particle.Position = new Vector2(ghost.Position.X, ghost.Position.Y - 14);
                 particle.Velocity = new Vector2(
                     MathHelper.Lerp(-50, 50, (float)random.NextDouble()), 
                     MathHelper.Lerp(-50, 50, (float)random.NextDouble()) 
@@ -336,8 +336,8 @@ namespace PlatformerExample
             // Draw the player
             player.Draw(spriteBatch);
             ghost.Draw(spriteBatch);
-            GhostParticles.Draw();
-            Rain.Draw();
+            GhostParticles.Draw(t);
+            Rain.Draw(t);
 
 
 
@@ -346,7 +346,7 @@ namespace PlatformerExample
             {
                 //spriteBatch.Draw(YouWin, win, Color.White);
                 spriteBatch.DrawString(spriteFont, "You Win! :)", player.Position, Color.Gold);
-                DoorParticles.Draw();
+                DoorParticles.Draw(t);
             }
 
             if (player.gameState == 2) //if you have lost, draw the you lose

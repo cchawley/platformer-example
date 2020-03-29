@@ -10,8 +10,10 @@ using System.Diagnostics;
 
 
 
+
 namespace PlatformerExample
 {
+    
     /// <summary>
     /// A delegate for spawning particles
     /// </summary>
@@ -123,9 +125,9 @@ namespace PlatformerExample
         /// <summary>
         /// Draw the active particles in the particle system
         /// </summary>
-        public void Draw()
+        public void Draw(Matrix t)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, t);
 
             // TODO: Draw particles
             // Iterate through the particles
@@ -134,6 +136,7 @@ namespace PlatformerExample
                 // Skip any "dead" particles
                 if (particles[i].Life <= 0) continue;
 
+                
                 // Draw the individual particles
                 spriteBatch.Draw(Texture, particles[i].Position, null, particles[i].Color, 0f, Vector2.Zero, particles[i].Scale, SpriteEffects.None, 0);
             }
