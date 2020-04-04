@@ -106,7 +106,7 @@ namespace PlatformerExample
 
             
             // Load the level
-            tilemap = Content.Load<Tilemap>("level3");
+            tilemap = Content.Load<Tilemap>("level5");
 
             foreach(ObjectGroup objectGroup in tilemap.ObjectGroups)
             {
