@@ -23,7 +23,7 @@ namespace PlatformerExample
         FallingRight
     }
 
-    public class GhostEnemy
+    public class GhostEnemy : ISprite
     {
         // The speed of the walking animation
         const int FRAME_RATE = 500;
@@ -196,7 +196,7 @@ namespace PlatformerExample
         /// SpriteBatch.Begin() and SpriteBatch.End()
         /// </summary>
         /// <param name="spriteBatch">The SpriteBatch to use</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
 #if Debug
             VisualDebugging.DrawRectangle(spriteBatch, Bounds, Color.Red);
