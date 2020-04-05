@@ -37,6 +37,11 @@
 /processor:TilesetProcessor
 /build:BetterSet4.tsx
 
+#begin E:/Game Design Stuff/level5.tmx
+/importer:TilemapImporter
+/processor:TilemapProcessor
+/build:E:/Game Design Stuff/level5.tmx;level5.tmx
+
 #begin E:/game pics/spritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,11 +77,6 @@
 /importer:TilemapImporter
 /processor:TilemapProcessor
 /build:level3.tmx
-
-#begin level5.tmx
-/importer:TilemapImporter
-/processor:TilemapProcessor
-/build:level5.tmx
 
 #begin Particle.png
 /importer:TextureImporter

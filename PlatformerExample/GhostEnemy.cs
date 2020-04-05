@@ -40,7 +40,7 @@ namespace PlatformerExample
         GhostState animationState = GhostState.WalkingLeft;
 
         // The ghost's speed
-        int speed = 3;
+        int speed = 10;
 
 
 
@@ -107,9 +107,9 @@ namespace PlatformerExample
                 {
                     Position.X += speed;
                     origin = new Vector2(10, 20);
-                    if (Position.X + 20 > 1040)
+                    if (Position.X + 20 > 2100)
                     {
-                        Position.X = 1020;
+                        Position.X = 2080;
                         animationState = GhostState.WalkingLeft;
                     }
                 }

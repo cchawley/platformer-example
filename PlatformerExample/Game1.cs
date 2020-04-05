@@ -203,7 +203,7 @@ namespace PlatformerExample
             Rain.SpawnParticle = (ref Particle particle) =>
             {
                 particle.Position = new Vector2(
-                    MathHelper.Lerp(0, 1040, (float)random.NextDouble()),
+                    MathHelper.Lerp(0, 2100, (float)random.NextDouble()),
                     MathHelper.Lerp(0, 1, (float)random.NextDouble())
                     );
                 particle.Velocity = new Vector2(
@@ -281,13 +281,13 @@ namespace PlatformerExample
 
             // TODO: Add your update logic here
             player.Update(gameTime);
-            
 
+            ghost.Update(gameTime);
             // Check for platform collisions
             var platformQuery = world.QueryRange(player.Bounds.X, player.Bounds.X + player.Bounds.Width);
             player.CheckForPlatformCollision(platformQuery);
 
-            ghost.Update(gameTime);
+            
 
             DoorParticles.Update(gameTime);
             Rain.Update(gameTime);

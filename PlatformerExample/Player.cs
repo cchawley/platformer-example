@@ -142,9 +142,9 @@ namespace PlatformerExample
                         {
                             Position.X = 16;
                         }
-                        if (Position.X + 20 > 1040)
+                        if (Position.X + 20 > 2100)
                         {
-                            Position.X = 1020;
+                            Position.X = 2100;
                         }
                         break;
                     case VerticalMovementState.Falling:
@@ -153,9 +153,9 @@ namespace PlatformerExample
                         {
                             Position.X = 16;
                         }
-                        if (Position.X + 20 > 1040)
+                        if (Position.X + 20 > 2100)
                         {
-                            Position.X = 1020;
+                            Position.X = 2100;
                         }
                         
                         break;
@@ -185,9 +185,9 @@ namespace PlatformerExample
                             {
                                 Position.X = 16;
                             }
-                            if (Position.X + 20 > 1040)
+                            if (Position.X + 20 > 2100)
                             {
-                                Position.X = 1020;
+                                Position.X = 2100;
                             }
                         }
                         else
@@ -197,12 +197,12 @@ namespace PlatformerExample
 
                 
             }
-            if (Position.X >= 1020 && Position.Y <= 200) //if player gets to the end of the level, they win!
+            if (Position.X >= 2090 && Position.Y <= 200) //if player gets to the end of the level, they win!
             {
                 gameState = 1;
                 speed = 0;
             }
-            if(Position.Y > 1100)
+            if(Position.Y > 1870)
             {
                 gameState = 3;
             }
