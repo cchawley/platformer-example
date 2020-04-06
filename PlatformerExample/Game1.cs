@@ -259,17 +259,18 @@ namespace PlatformerExample
             };
 
             // put player and ghost drawings on layer 2
+            /*
             var playerLayer = new ParallaxLayer(this);
             playerLayer.Sprites.Add(player);
             playerLayer.Sprites.Add(ghost);
             playerLayer.DrawOrder = 3;
             Components.Add(playerLayer);
-
+            */
             
             //fireballs background drawing           
             var FireTextures = new Texture2D[]
             {
-                 Content.Load<Texture2D>("FireBalls")
+                 Content.Load<Texture2D>("FireBalls2")
             };
            
             var FireSprites = new StaticSprite[]
@@ -289,7 +290,7 @@ namespace PlatformerExample
             //Cloud layer background Drawing
             var CloudTextures = new Texture2D[]
             {
-                 Content.Load<Texture2D>("Clouds")                                
+                 Content.Load<Texture2D>("Clouds2")                                
             };
 
             var CloudSprites = new StaticSprite[]
@@ -307,30 +308,30 @@ namespace PlatformerExample
             Components.Add(CloudLayer);
 
             //Mountain layer background Drawing
-            var MountainTextures = new Texture2D[]
+            var FlourTextures = new Texture2D[]
             {
-                 Content.Load<Texture2D>("HomemadeMountains")
+                 Content.Load<Texture2D>("Flours")
             };
 
-            var MountainSprites = new StaticSprite[]
+            var FlourSprites = new StaticSprite[]
             {
-                new StaticSprite(MountainTextures[0]),
-                new StaticSprite(MountainTextures[0], new Vector2(500, 0)),
-                new StaticSprite(MountainTextures[0], new Vector2(1000, 0)),
-                new StaticSprite(MountainTextures[0], new Vector2(1500, 0)),
-                new StaticSprite(MountainTextures[0], new Vector2(2000, 0))
+                new StaticSprite(FlourTextures[0]),
+                new StaticSprite(FlourTextures[0], new Vector2(500, 0)),
+                new StaticSprite(FlourTextures[0], new Vector2(1000, 0)),
+                new StaticSprite(FlourTextures[0], new Vector2(1500, 0)),
+                new StaticSprite(FlourTextures[0], new Vector2(2000, 0))
             };
 
-            var MountainLayer = new ParallaxLayer(this);
-            MountainLayer.Sprites.AddRange(MountainSprites);
-            MountainLayer.DrawOrder = 0;
-            Components.Add(MountainLayer);
+            var FlourLayer = new ParallaxLayer(this);
+            FlourLayer.Sprites.AddRange(FlourSprites);
+            FlourLayer.DrawOrder = 0;
+            Components.Add(FlourLayer);
 
 
             //speeds of each background and character layer
-            MountainLayer.ScrollController = new PlayerTrackingScrollController(player, 0.1f);
+            FlourLayer.ScrollController = new PlayerTrackingScrollController(player, 0.1f);
             CloudLayer.ScrollController = new PlayerTrackingScrollController(player, 0.4f);
-            playerLayer.ScrollController = new PlayerTrackingScrollController(player, 1.0f);
+            //playerLayer.ScrollController = new PlayerTrackingScrollController(player, 1.0f);
             FireLayer.ScrollController = new PlayerTrackingScrollController(player, 1.0f);
 
         }
@@ -417,7 +418,9 @@ namespace PlatformerExample
             }
             Debug.WriteLine($"{platformQuery.Count()} Platforms rendered");
             
-            // Draw the player          
+            // Draw the player
+            player.Draw(spriteBatch);
+            ghost.Draw(spriteBatch);
             GhostParticles.Draw(t);
             Rain.Draw(t);
 

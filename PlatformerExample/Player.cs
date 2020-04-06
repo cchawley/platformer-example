@@ -38,7 +38,7 @@ namespace PlatformerExample
     /// <summary>
     /// A class representing the player
     /// </summary>
-    public class Player : ISprite
+    public class Player 
     {
         // The speed of the walking animation
         const int FRAME_RATE = 500;
@@ -197,7 +197,7 @@ namespace PlatformerExample
 
                 
             }
-            if (Position.X >= 2090 && Position.Y <= 200) //if player gets to the end of the level, they win!
+            if (Position.X >= 2090 && Position.Y <= 1500) //if player gets to the end of the level, they win!
             {
                 gameState = 1;
                 speed = 0;
@@ -272,7 +272,7 @@ namespace PlatformerExample
         /// SpriteBatch.Begin() and SpriteBatch.End()
         /// </summary>
         /// <param name="spriteBatch">The SpriteBatch to use</param>
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
 #if VISUAL_DEBUG 
             VisualDebugging.DrawRectangle(spriteBatch, Bounds, Color.Red);
